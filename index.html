@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Merry Christmas</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      width: 100vw;
+      height: 100vh;
+      background: black;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .gift-container {
+      position: relative;
+      cursor: pointer;
+    }
+
+    .box {
+      width: 160px;
+      height: 120px;
+      background: crimson;
+      border-radius: 6px;
+      position: relative;
+    }
+
+    .box::before {
+      content: "";
+      position: absolute;
+      width: 30px;
+      height: 100%;
+      background: gold;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .lid {
+      width: 170px;
+      height: 40px;
+      background: crimson;
+      position: absolute;
+      top: -40px;
+      left: -5px;
+      border-radius: 6px 6px 0 0;
+      transform-origin: bottom center;
+      transition: transform 0.8s ease;
+    }
+
+    .lid::before {
+      content: "";
+      position: absolute;
+      width: 30px;
+      height: 100%;
+      background: gold;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .opened .lid {
+      transform: rotateX(120deg);
+    }
+
+    .message {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, 0);
+      font-size: 48px;
+      color: white;
+      opacity: 0;
+      pointer-events: none;
+      animation: none;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    .show-message {
+      animation: riseUp 2s ease forwards;
+    }
+
+    @keyframes riseUp {
+      0% {
+        transform: translate(-50%, 20px) scale(0.8);
+        opacity: 0;
+      }
+      100% {
+        transform: translate(-50%, -200px) scale(1);
+        opacity: 1;
+      }
+    }
+
+    .snowflake {
+      position: absolute;
+      top: -20px;
+      font-size: 18px;
+      color: white;
+      opacity: 0.8;
+      animation: fall linear infinite;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(110vh);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="gift-container" id="gift">
+    <div class="lid"></div>
+    <div class="box"></div>
+  </div>
+
+  <div class="message" id="message">🎄 Merry Christmas Dad 🎄</div>
+
+  <script>
+    const gift = document.getElementById('gift');
+    const message = document.getElementById('message');
+    let opened = false;
+
+    gift.addEventListener('click', () => {
+      if (opened) return;
+      opened = true;
+
+      gift.classList.add('opened');
+      message.classList.add('show-message');
+
+      createSnow();
+    });
+
+    function createSnow() {
+      for (let i = 0; i < 40; i++) {
+        const snow = document.createElement('div');
+        snow.className = 'snowflake';
+        snow.innerHTML = '❄';
+        snow.style.left = Math.random() * 100 + 'vw';
+        snow.style.animationDuration = 3 + Math.random() * 5 + 's';
+        snow.style.fontSize = 12 + Math.random() * 24 + 'px';
+        document.body.appendChild(snow);
+      }
+    }
+  </script>
+
+</body>
+</html>
